@@ -1,0 +1,166 @@
+--create table Customers
+--(
+--CustomerID int primary key,
+--CustomerName varchar(100),
+--AGE int,
+--Monthlylncome decimal(12,2),
+--City varchar(50)
+--);
+--Create table Loans
+--(
+--LoanID int primary key,
+--CustomerID int,
+--LoanDate DATE,
+--LoanAmount decimal(12,2),
+--LoanType varchar(50),
+--RemainingDebt decimal(12,2),
+--PaymentStatus varchar(50)
+--FOREIGN KEY(CustomerID) REFERENCES Customers(CustomerID)
+--);
+--insert into Loans
+--(LoanID,CustomerID,LoanDate, LoanAmount, LoanType,RemainingDebt,PaymentStatus)
+--VALUES
+--(1,1,'2026-01-10',120000,'Consumer Loan',95000,'Regular'),
+--(2,2,'2026-01-15',250000,'Vehicle Loan',210000,'Regular'),
+--(3,3,'2026-01-22',80000,'Cosumer Loan',70000,'Late'),
+--(4,4,'2026-02-05',350000,'Housing Loan',330000,'Regular'),
+--(5,5,'2026-02-12',150000,'Cosumer Loan',125000,'Late'),
+--(6,6,'2026-02-20',90000,'Cosumer Loan',60000,'Regular'),
+--(7,7,'2026-03-03',500000,'Housing Loan',470000,'Regular'),
+--(8,8,'2026-03-10',200000,'Vehicle Loan',165000,'Late'),
+--(9,1,'2026-03-15',60000,'Consumer Loan',45000,'Regular'),
+--(10,3,'2026-03-20',180000,'Vehicle Loan',160000,'Late')
+
+--SELECT * from Loans;
+--SELECT 
+--CustomerID,
+--COUNT(LoanID) AS Total_Loans,
+--SUM(LoanAmount) as Total_Loan_Amount,
+--SUM(RemainingDebt) as Total_Remaining_Debt
+--From Loans
+--Group by CustomerID
+--order by Total_Remaining_Debt DESC;
+
+--SELECT
+--c.CustomerID,
+--c.FirstName,
+--c.LastName,
+--c.Monthhlylncome as Monthhly_lncome,
+--SUM(I.RemainingDebt) as Total_Remaining_Debt,
+--ROUND
+--(
+--SUM(I.RemainingDebt)/NULLIF(c.Monthhlylncome,0),2
+--)
+--as Debt_lncome_Ratio
+--from Customers c 
+--INNER JOIN Loans I 
+--on c.CustomerID=I.CustomerID
+--GROUP BY 
+--c.CustomerID,
+--c.FirstName,
+--c.LastName,
+--c.Monthhlylncome
+--ORDER BY Total_Remaining_Debt DESC;
+--SELECT
+--c.CustomerID,
+--c.FirstName,
+--c.LastName,
+--c.Monthhlylncome as Monthly_lncome,
+--SUM(RemainingDebt) as Total_Remaining_Debt,
+--ROUND
+--(
+--SUM(RemainingDebt)/ NULLIF(c.Monthhlylncome,0),2
+--)
+--as Debt_ýncome_Ratio
+--from Customers c
+--INNER JOIN Loans I
+--ON c.CustomerID=I.CustomerID
+--GROUP BY
+--c.CustomerID,
+--c.FirstName,
+--c.LastName,
+--c.Monthhlylncome
+--order by Debt_ýncome_Ratio DESC;
+--WITH DebtAnalysis as 
+--(
+--select 
+--c.CustomerID,
+--c.FirstName,
+--c.LastName,
+--c.Monthhlylncome as Monthly_lncome,
+--SUM(I.RemainingDebt) as Total_Remaining_Debt,
+--ROUND
+--(
+--SUM(I.RemainingDebt)/ NULLIF(c.Monthhlylncome,0),2
+--)
+--as Debt_lncome_Ratio
+--From Customers c
+--INNER JOIN Loans I
+--on c.CustomerID=I.CustomerID
+--group by 
+--c.CustomerID,
+--c.FirstName,
+--c.LastName,
+--c.Monthhlylncome
+--)
+-- select
+-- CustomerID,
+-- FirstName,
+-- LastName,
+-- Monthly_lncome,
+-- Total_Remaining_Debt,
+-- Debt_lncome_Ratio,
+-- CASE
+-- WHEN Debt_lncome_Ratio>=3 THEN 'Yüksek'
+-- When Debt_lncome_Ratio>=2 Then 'Orta'
+-- Else 'Düþük'
+-- End as Debt_Risk_Level
+-- From DebtAnalysis
+-- ORDER by Debt_lncome_Ratio DESC;
+--SELECT 
+--RiskLevel,
+--COUNT(*) as MusteriSayisi
+--From 
+--(
+--select 
+--c.CustomerID,
+--c.FirstName+''++LastName as Musteri,
+--CASE
+--WHEN I.LoanAmount/c.Monthhlylncome>=3
+--then 'Yüksek'
+--Else 'Düþük'
+--end as RiskLevel
+--from Customers c 
+--INNER JOIN Loans I
+--on c.CustomerID=I.CustomerID
+--)
+--as RiskAnalizi 
+--group by RiskLevel;
+--select top 1
+--c.FirstName+''+ c.LastName as Musteri,
+--I.LoanAmount as KrediTutari,
+--I.RemainingDebt as KalanBorc
+--from Customers c
+--INNER JOIN Loans I
+--on c.CustomerID=I.CustomerID
+--ORDER by I.LoanAmount DESC;
+--SELECT 
+--SUM(RemainingDebt) as ToplamKalanBorc,
+--AVG(RemainingDebt) as OrtalamaKalanBorc
+--from Loans
+--SELECT TOP 1
+--c.FirstName+''+c.LastName as Musteri,
+--I.RemainingDebt as KalanBorc
+--From Customers c
+--INNER JOIN Loans I
+--ON c.CustomerID=I.CustomerID
+--order by I.RemainingDebt DESC
+
+
+
+
+
+
+
+
+
